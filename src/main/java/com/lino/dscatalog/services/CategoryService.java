@@ -47,7 +47,7 @@ public class CategoryService {
 		return new CategoryDTO(entity);
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public CategoryDTO insert(CategoryDTO dto) {
 
 		Category entity = new Category();
@@ -71,7 +71,7 @@ public class CategoryService {
 			throw new ResourceNotFoundException("Id não encontrado " + id);
 		}
 	}
-
+	
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		
