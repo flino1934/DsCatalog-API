@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lino.dscatalog.dto.CategoryDTO;
 import com.lino.dscatalog.entities.Category;
 import com.lino.dscatalog.repositories.CategoryRepository;
+import com.lino.dscatalog.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class CategoryService {
@@ -34,7 +35,7 @@ public class CategoryService {
 		// TODO Auto-generated method stub
 
 		Optional<Category> obj = categoryRepository.findById(id);
-		Category entity = obj.get();
+		Category entity = obj.orElseThrow(() -> new ResourceNotFoundException("Categoria Não encontrada!!"));
 
 		return new CategoryDTO(entity);
 	}
