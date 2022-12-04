@@ -1,6 +1,7 @@
 package com.lino.dscatalog.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +26,17 @@ public class CategoryService {
 		// esta convertendo uma lista de category para categoryDTO
 		List<CategoryDTO> listDto = list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
 
-//		List<CategoryDTO> listDto = new ArrayList<>();
-//
-//		for (Category cat : list) {
-//
-//			listDto.add(new CategoryDTO(cat));// esta convertendo uma lista de category para categoryDTO
-//
-//		}
-
 		return listDto;
 
+	}
+
+	public CategoryDTO findById(Long id) {
+		// TODO Auto-generated method stub
+
+		Optional<Category> obj = categoryRepository.findById(id);
+		Category entity = obj.get();
+
+		return new CategoryDTO(entity);
 	}
 
 }
