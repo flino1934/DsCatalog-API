@@ -12,8 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lino.dscatalog.dto.CategoryDTO;
 import com.lino.dscatalog.dto.ProductDTO;
+import com.lino.dscatalog.entities.Category;
 import com.lino.dscatalog.entities.Product;
+import com.lino.dscatalog.repositories.CategoryRepository;
 import com.lino.dscatalog.repositories.ProductRepository;
 import com.lino.dscatalog.services.exceptions.DataBaseException;
 import com.lino.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -23,6 +26,9 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	CategoryRepository categoryRepository;
 
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
@@ -48,7 +54,7 @@ public class ProductService {
 	public ProductDTO insert(ProductDTO dto) {
 
 		Product entity = new Product();
-//		entity.setName(dto.getName());
+		copyDtoToEntity(dto,entity);
 		entity = productRepository.save(entity);
 
 		return new ProductDTO(entity);
@@ -60,7 +66,7 @@ public class ProductService {
 		try {
 
 			Product entity = productRepository.getOne(id);
-//			entity.setName(dto.getName());
+			copyDtoToEntity(dto,entity);
 			entity = productRepository.save(entity);
 
 			return new ProductDTO(entity);
@@ -83,6 +89,27 @@ public class ProductService {
 		}catch (DataIntegrityViolationException e) {
 			throw new DataBaseException("Violação de integridade " + id);
 		}
+	}
+
+	private void copyDtoToEntity(ProductDTO dto, Product entity) {
+		// TODO Auto-generated method stub
+
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setDate(dto.getDate());
+		entity.setImgUrl(dto.getImgUrl());
+		entity.setPrice(dto.getPrice());
+		
+		entity.getCategories().clear();
+		
+		//vamos fazer um foreach que vai percorrer todas as categorias que estão associados ao meu dto
+		for (CategoryDTO catDto : dto.getCategories()) {
+			//vai instaciar uma entidade de categorydto sem tocar no BD
+			Category category = categoryRepository.getOne(catDto.getId());//vai estar pegando a categoria
+			entity.getCategories().add(category);
+		}
+		
+		
 	}
 
 }
