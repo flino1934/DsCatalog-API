@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.lino.dscatalog.entities.Product;
 import com.lino.dscatalog.factory.ProductFactory;
+import com.lino.dscatalog.services.exceptions.ResourceNotFoundException;
 
 @DataJpaTest
 public class ProductRepositoryTest {
@@ -58,6 +59,22 @@ public class ProductRepositoryTest {
 		
 		Assertions.assertNotNull(product.getId());
 		Assertions.assertEquals(countTotalProducts+1, product.getId());
+		
+	}
+	
+	@Test
+	public void getShouldProductByIdExist() {
+		
+		Optional<Product> obj = productRepository.findById(existingById);
+		Assertions.assertTrue(obj.isPresent());
+		
+	}
+	
+	@Test
+	public void getShouldProductByIdDoesNotExist() {
+		
+		Optional<Product> obj = productRepository.findById(nonExistingById);
+		Assertions.assertTrue(obj.isEmpty());
 		
 	}
 	
