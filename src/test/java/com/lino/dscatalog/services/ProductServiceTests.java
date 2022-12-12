@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.lino.dscatalog.repositories.ProductRepository;
+import com.lino.dscatalog.services.exceptions.ResourceNotFoundException;
 
 @ExtendWith(SpringExtension.class)
 public class ProductServiceTests {
@@ -43,6 +44,18 @@ public class ProductServiceTests {
 		
 		Assertions.assertDoesNotThrow(()->{
 			service.delete(existingById);
+		});
+		
+//		Mockito.verify(repository,Mockito.times(1)).deleteById(existingById);
+
+	}
+	
+	@Test
+	public void deleteShouldThrowResourceNotFoundExceptionWhenIdNotExisting() {
+
+		
+		Assertions.assertThrows(ResourceNotFoundException.class, ()->{
+			service.delete(nonExistingById);
 		});
 		
 //		Mockito.verify(repository,Mockito.times(1)).deleteById(existingById);
