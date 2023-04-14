@@ -227,22 +227,26 @@ public class Main {
 							System.out.println("0 - Finalizar compra");
 							
 							escolhaProduto = sc.nextInt();
+							boolean productExist = false;
 							
 							for (Produto produtoSearch : produtos) {
 								
 								if (produtoSearch.getId().equals(escolhaProduto)) {
 									carrinho.add(produtoSearch);
-									}else if(escolhaProduto != produtoSearch.getId()){
-										System.out.println("Código Invalido");
-										break;
+									productExist = true;
 									}
 								
 							}
+
+								if (productExist == false) {
+									System.out.println();
+									System.out.println("Código invalido");
+								} else {
+									System.out.println("Compra Realizada com sucesso!");
+									System.out.println();
+								}
 							
-//							Produto produtoescolhido = produtos.stream().filter(x -> x.getId().equals(escolhaProduto)).collect(Collectors.toList()).get(0);
 							
-							System.out.println("Compra Realizada com sucesso!");
-							System.out.println();
 							
 						} while (escolhaProduto != 0);
 						System.out.println("************************************************************");
@@ -308,4 +312,3 @@ public class Main {
 		return venda;
 	}
 }
-
