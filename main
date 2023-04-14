@@ -15,8 +15,6 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		// SIMULANDO BANCO DE DADOS
-
 		List<Produto> carrinho = new ArrayList<Produto>();
 		List<Venda> vendas = new ArrayList<Venda>();
 
@@ -38,14 +36,12 @@ public class Main {
 		Cliente cliente = new Cliente("07221134049", "Allan da Silva", "cliente", 20);
 		Cliente cliente2 = new Cliente("72840700050", "Samuel da Silva", "cliente2", 24);
 
-		//admin apenas realiza compras como se fosse um cliente.
 		Usuario usuario1 = new Usuario("admin", "1234", null, null);
 		Usuario usuario2 = new Usuario("empresa", "1234", null, empresa);
 		Usuario usuario3 = new Usuario("cliente", "1234", cliente, null);
 		Usuario usuario4 = new Usuario("cliente2", "1234", cliente2, null);
 		Usuario usuario5 = new Usuario("empresa2", "1234", null, empresa2);
 		Usuario usuario6 = new Usuario("empresa3", "1234", null, empresa3);
-
 
 		List<Usuario> usuarios = Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6);
 		List<Cliente> clientes = Arrays.asList(cliente, cliente2);
@@ -64,7 +60,6 @@ public class Main {
 		System.out.print("Senha: ");
 		String senha = sc.next();
 		
-
 		List<Usuario> usuariosSearch = usuarios.stream().filter(x -> x.getUsername().equals(username))
 				.collect(Collectors.toList());
 		if (usuariosSearch.size() > 0) {
@@ -125,10 +120,16 @@ public class Main {
 
 						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
 					}
-					case 0: {
-						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
+						case 0 : {
+							executar(usuarios, clientes, empresas, produtos,carrinho, vendas);
 
-					}
+						}
+						default : {
+							System.out
+									.println("Opção inválida, tente novamente");
+							break;
+						}
+
 					}
 
 				} else if (usuarioLogado.IsAdmin()) {//if Admin
@@ -198,9 +199,13 @@ public class Main {
 					case 0: {
 						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
 
-					}
+						}
+						default : {
+							System.out
+									.println("Opção inválida, tente novamente");
+							break;
+						}
 				}//fim switch
-					
 					
 				}else {
 					System.out.println("1 - Relizar Compras");
@@ -288,7 +293,12 @@ public class Main {
 					case 0: {
 						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
 
-					}
+						}
+						default : {
+
+							System.out.println("Opção invalida ");
+
+						}
 
 					}
 				}
