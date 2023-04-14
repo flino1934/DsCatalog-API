@@ -1,6 +1,7 @@
 package com.safeway.application;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -62,6 +63,7 @@ public class Main {
 		
 		List<Usuario> usuariosSearch = usuarios.stream().filter(x -> x.getUsername().equals(username))
 				.collect(Collectors.toList());
+		try {
 		if (usuariosSearch.size() > 0) {
 			Usuario usuarioLogado = usuariosSearch.get(0);
 			if ((usuarioLogado.getSenha().equals(senha))) {
@@ -243,7 +245,7 @@ public class Main {
 								
 							}
 
-								if (productExist == false) {
+								if (productExist == false && escolhaProduto != 0) {
 									System.out.println();
 									System.out.println("Código invalido");
 								} else {
@@ -307,6 +309,21 @@ public class Main {
 				System.out.println("Senha incorreta");
 		} else {
 			System.out.println("Usuário não encontrado");
+		}
+		}catch (InputMismatchException e) {
+			
+			System.out.println();
+			System.out.println("Dados Invalidos digite um numero corresponsente a lista");
+			System.out.println();
+
+		}catch (RuntimeException e) {
+			
+			System.out.println();
+			System.out.println("Erro Inesperado");
+			System.out.println();
+
+		}finally {
+			executar(usuariosSearch, clientes, empresas, produtos, carrinho, vendas);
 		}
 	}
 
