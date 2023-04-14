@@ -50,8 +50,7 @@ public class Main {
 		List<Usuario> usuarios = Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6);
 		List<Cliente> clientes = Arrays.asList(cliente, cliente2);
 		List<Empresa> empresas = Arrays.asList(empresa, empresa2, empresa3);
-		List<Produto> produtos = Arrays.asList(produto, produto2, produto3, produto4, produto5, produto6, produto7,
-				produto8, produto9, produto10);
+		List<Produto> produtos = Arrays.asList(produto, produto2, produto3, produto4, produto5, produto6, produto7,produto8, produto9, produto10);
 		executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
 	}
 
@@ -171,10 +170,10 @@ public class Main {
 							}
 
 						});
-//						System.out.println("Saldo Empresa: " + usuarioLogado.getEmpresa().getSaldo());
-//						System.out.println("************************************************************");
-//
-//						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
+						System.out.println("Saldo Empresa: " + usuarioLogado.getEmpresa().getSaldo());
+						System.out.println("************************************************************");
+
+						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
 					}
 					case 2: {
 						System.out.println();
@@ -182,22 +181,22 @@ public class Main {
 						System.out.println("MEUS PRODUTOS");
 						produtos.stream().forEach(produto -> {
 							if (produto.getEmpresa().getId().equals(empresaEscolhida.getId())) {
-//								System.out.println("************************************************************");
-//								System.out.println("Código: " + produto.getId());
-//								System.out.println("Produto: " + produto.getNome());
-//								System.out.println("Quantidade em estoque: " + produto.getQuantidade());
-//								System.out.println("Valor: R$" + produto.getPreco());								
-//								System.out.println("************************************************************");
+								System.out.println("************************************************************");
+								System.out.println("Código: " + produto.getId());
+								System.out.println("Produto: " + produto.getNome());
+								System.out.println("Quantidade em estoque: " + produto.getQuantidade());
+								System.out.println("Valor: R$" + produto.getPreco());								
+								System.out.println("************************************************************");
 							}
 
 						});
-//						System.out.println("Saldo Empresa: " + usuarioLogado.getEmpresa().getSaldo());
-//						System.out.println("************************************************************");
-//
-//						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
+						System.out.println("Saldo Empresa: " + usuarioLogado.getEmpresa().getSaldo());
+						System.out.println("************************************************************");
+
+						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
 					}
 					case 0: {
-//						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
+						executar(usuarios, clientes, empresas, produtos, carrinho, vendas);
 
 					}
 				}//fim switch
@@ -228,13 +227,14 @@ public class Main {
 							
 							escolhaProduto = sc.nextInt();
 							boolean productExist = false;
+							Empresa empresaEscolhida = empresas.stream().filter(x -> x.getId().equals(escolhaEmpresa)).collect(Collectors.toList()).get(0);//escolhe a empresa
 							
 							for (Produto produtoSearch : produtos) {
 								
-								if (produtoSearch.getId().equals(escolhaProduto)) {
+								if (produtoSearch.getId().equals(escolhaProduto) && produtoSearch.getEmpresa().getId() == empresaEscolhida.getId()) {
 									carrinho.add(produtoSearch);
 									productExist = true;
-									}
+								}
 								
 							}
 
@@ -245,8 +245,6 @@ public class Main {
 									System.out.println("Compra Realizada com sucesso!");
 									System.out.println();
 								}
-							
-							
 							
 						} while (escolhaProduto != 0);
 						System.out.println("************************************************************");
